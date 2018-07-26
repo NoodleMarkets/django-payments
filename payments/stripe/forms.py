@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+import json
 import stripe
 from django import forms
 from django.utils.translation import ugettext as _
@@ -56,7 +57,7 @@ class StripeFormMixin(object):
 
     def save(self):
         self.payment.transaction_id = self.charge.id
-        self.payment.attrs.charge = stripe.util.json.dumps(self.charge)
+        self.payment.attrs.charge = json.dumps(self.charge)
         self.payment.change_status(PaymentStatus.PREAUTH)
         if self.provider._capture:
             self.payment.capture()
