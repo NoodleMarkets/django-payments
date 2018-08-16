@@ -39,7 +39,7 @@ class StripeFormMixin(object):
                         description='%s %s' % (
                             self.payment.billing_last_name,
                             self.payment.billing_first_name))
-                except stripe.CardError as e:
+                except stripe.error.CardError as e:
                     # Making sure we retrieve the charge
                     charge_id = e.json_body['error']['charge']
                     self.charge = stripe.Charge.retrieve(charge_id)
